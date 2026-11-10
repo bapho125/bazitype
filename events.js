@@ -8,13 +8,17 @@ const FORM_FIELDS = {e:"entry.2028279721", data:"entry.1949004381", from:"entry.
 
 const FROM = (function(){ try{ return (new URLSearchParams(location.search).get("from")||"").slice(0,20); }catch(_){ return ""; } })();
 const SENT_ONCE = {};
+/* 2026-11-10 戦略役「測れるようにする」：端末の時間帯と言語を一緒に送る（個人の情報ではない。国の代わりにSGかを見る）。
+   ?from=me で開いた端末は、それ以降ずっと何も送らない（中村さん・チームの閲覧を数に入れない）。 */
+const ENV = (function(){ try{ return {tz:(Intl.DateTimeFormat().resolvedOptions().timeZone||"").slice(0,40), lang:(navigator.language||"").slice(0,12)}; }catch(_){ return {}; } })();
+const IS_ME = (function(){ try{ if(FROM==="me") localStorage.setItem("bzt_me","1"); return localStorage.getItem("bzt_me")==="1"; }catch(_){ return FROM==="me"; } })();
 
 function sendEvent(name, data){
-  if(!ENDPOINT) return;
+  if(!ENDPOINT || IS_ME) return;
   try{
-    const d = data || {};
+    const d = Object.assign({}, data || {});
     if(d.once){ const k = name+":"+JSON.stringify(d); if(SENT_ONCE[k]) return; SENT_ONCE[k]=1; delete d.once; }
-    const row = {e:name, data:JSON.stringify(d), from:FROM, at:new Date().toISOString()};
+    const row = {e:name, data:JSON.stringify(Object.assign(d, ENV)), from:FROM, at:new Date().toISOString()};
     let body;
     if(FORM_FIELDS){ body = new URLSearchParams(); for(const k in FORM_FIELDS) body.append(FORM_FIELDS[k], row[k]); }
     else body = JSON.stringify(row);
