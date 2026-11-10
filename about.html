@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>About · BaZi Type</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;600&family=Noto+Sans:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#faf7f2;--ink:#2b2620;--sub:#6d645a;--line:#e4dccf;--accent:#b2402f;--card:#fff}
+@media (prefers-color-scheme:dark){:root{--bg:#1c1915;--ink:#efe9df;--sub:#a99f92;--line:#3a342c;--accent:#e0705c;--card:#25211c}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.7 "Noto Sans",system-ui,sans-serif}
+main{max-width:640px;margin:0 auto;padding:32px 16px 64px}
+h1{font:600 1.9rem/1.3 "Noto Serif",serif;margin:0 0 8px}
+.kicker{color:var(--accent);font-weight:600;letter-spacing:.06em;font-size:.8rem;text-transform:uppercase}
+p.sub{color:var(--sub);margin:0 0 24px}
+form{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px;display:grid;gap:14px}
+label{font-weight:600;font-size:.9rem;display:grid;gap:6px}
+input{font:inherit;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink)}
+.hint{font-weight:400;color:var(--sub);font-size:.8rem}
+button{font:600 1rem "Noto Sans",sans-serif;padding:12px;border:0;border-radius:8px;background:var(--accent);color:#fff;cursor:pointer}
+#out{margin-top:24px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px;margin-bottom:14px}
+.type{font:600 1.5rem "Noto Serif",serif}
+.note{background:color-mix(in srgb,var(--accent) 10%,transparent);border-radius:8px;padding:10px 12px;font-size:.9rem;margin-top:10px}
+a.buy{display:block;text-align:center;margin-top:14px;padding:12px;border-radius:8px;background:var(--ink);color:var(--bg);text-decoration:none;font-weight:600}
+footer{margin-top:40px;color:var(--sub);font-size:.8rem;border-top:1px solid var(--line);padding-top:16px}
+footer a{color:var(--sub)}
+table{width:100%;border-collapse:collapse;font-size:.88rem;margin:10px 0 18px}
+th,td{text-align:left;vertical-align:top;padding:8px 6px;border-bottom:1px solid var(--line)}
+th{font-weight:600;color:var(--sub);font-size:.78rem}
+h2{font:600 1.3rem/1.3 "Noto Serif",serif;margin:28px 0 6px}
+.box{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin:14px 0}
+</style></head><body><main>
+<p><a href="index.html">← Find your BaZi Type</a></p>
+<h1>About</h1>
+
+<p>BaZi Type is a small project run from Japan<!-- 2026-11-10 中村さん「サイトには連絡先だけ」→ 名義は載せない --> (contact: hello@bazitype.com). We read your BaZi chart (Four Pillars, calculated for Singapore time) and name one pattern you tend to repeat: a strength you lean on a little too often. Then we give you one small thing to try this month.</p>
+<p><b>How we make it.</b> The calculation is done by a fixed program, not by AI, and it runs in your own browser. The texts for the 50 patterns were written with the help of AI and checked by us. Everyone with the same pattern sees the same text, and we say so.</p>
+<p><b>What we don't do.</b> We don't predict events or promise results. We don't give medical, legal or financial advice.</p>
+<div class="box">If something in your life feels too heavy to carry alone, please talk to a professional you trust — a counsellor or a doctor. A chart can help you notice a habit; it can't replace a person who can listen. In Singapore, Samaritans of Singapore (SOS) is there 24 hours: call <a href="tel:1767">1767</a> or WhatsApp <a href="https://wa.me/6591511767">9151 1767</a>.</div>
+
+<h2 id="how">How we count your pattern</h2>
+<p>BaZi schools differ in several places. Here is exactly what we do, so you can check it.</p>
+<ol>
+<li><b>Your chart.</b> Year, month, day and hour pillars from your Singapore clock time (with the old UTC+7:30 and other offsets before 1982). The year and month change at the solar terms (Li Chun on about 4 February), not at Lunar New Year.</li>
+<li><b>What we count.</b> The seven characters other than your Day Master (five if you don't know your birth time). Each heavenly stem counts 1 point. Each earthly branch is split into its hidden stems.</li>
+<li><b>The month counts double.</b> The month branch holds the most seasonal strength, so its hidden stems count ×2.</li>
+<li><b>Ten Gods into five groups.</b> Each character becomes one of the Ten Gods as seen from your Day Master, and the Ten Gods are added into five groups: Peers 比劫, Output 食伤, Wealth 财, Officer 官杀, Resource 印. The biggest group, together with your Day Master, names your pattern (10 × 5 = 50 patterns).</li>
+<li><b>Ties.</b> If two groups are equal, we prefer the group of the month branch's main stem, then the group that shows more often in the stems, then the one concentrated in a single Ten God. If the top two are within 0.5 points, we show both ("between two patterns").</li>
+<li><b>No birth time.</b> We try all 12 possible birth hours and take the most common pattern. If not all 12 agree, we tell you, and show the other pattern. With a rough time (morning, afternoon, evening, night) we try the 3 hours inside it.</li>
+</ol>
+<table>
+<tr><th>Where schools differ</th><th>What others do</th><th>What we do</th></tr>
+<tr><td>Weight of hidden stems</td><td>7:2:1, 6:3:1, by days of the month, or main stem only</td><td>6:3:1 (two stems: 7:3)</td></tr>
+<tr><td>Which hidden stems</td><td>Some put 丙戊庚 in 巳, leave 己 out of 午, or add 戊 to 亥</td><td>子癸 丑己癸辛 寅甲丙戊 卯乙 辰戊乙癸 巳丙庚戊 午丁己 未己丁乙 申庚壬戊 酉辛 戌戊辛丁 亥壬甲</td></tr>
+<tr><td>Strength of the month</td><td>×2, ×3, seasonal factors on every character, or only for the chart structure</td><td>Month branch ×2 only</td></tr>
+<tr><td>Count the Day Master itself?</td><td>Some count it as one more Peer</td><td>No (it would push Peers up too much)</td></tr>
+<tr><td>Clock time or solar time; 11 pm</td><td>Some use true solar time; some start the next day at 11 pm</td><td>Clock time. If you were born in the 11 pm hour, we show the pattern for both days</td></tr>
+<tr><td>What the strongest group means</td><td>In classical BaZi it feeds into chart structure and strength, not a personality on its own</td><td>We use it only to name a repeating pattern. Not for telling good times from bad</td></tr>
+</table>
+<p>We don't use useful gods, chart structures, Day Master strength, symbolic stars or the 10-year pillars (大运) to set your pattern, so your pattern stays the same through your life. In the paid notebook, the 2027 month pillars (and how their branches meet yours) decide which month's text you see — your pattern itself doesn't change.</p>
+<p>Born near the start of a solar month? We also count your chart with the neighbouring month and tell you if the pattern would change.</p>
+
+<p>Contact: hello@bazitype.com</p>
+<footer>For reflection and entertainment. Nothing here predicts events or replaces professional advice.<br><a href="about.html">About</a> · <a href="privacy.html">Privacy</a> · <a href="disclosure.html">Affiliate disclosure</a> · hello@bazitype.com</footer>
+</main></body></html>

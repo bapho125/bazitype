@@ -1,0 +1,655 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BaZi Type — the pattern you keep repeating, named from your BaZi chart</title>
+<meta name="description" content="Free: your BaZi chart counted into one of 50 patterns — the strength you lean on a little too much, what it gives you, and one small move for this month. Calculated for Singapore time.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700;800&family=Noto+Serif+SC:wght@500;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ai:#16213B;      /* 藍：夜の藍染め */
+  --ai2:#22305A;
+  --shu:#D4432C;     /* 朱：印 */
+  --kin:#C8A35B;     /* 金：箔 */
+  --washi:#EFE7D8;   /* 和紙 */
+  --washi2:#E4D9C4;
+  --sumi:#1C1A17;    /* 墨 */
+  --mist:#9AA3B9;
+  --g0:#4E8A5C;--g1:#D4432C;--g2:#B08A45;--g3:#3E6E9E;--g4:#7A6AA8;
+  --mincho:"Shippori Mincho","Noto Serif SC",serif;
+  --zh:"Noto Serif SC","Shippori Mincho",serif;
+  --garamond:"Cormorant Garamond",serif;
+  --gothic:"Zen Kaku Gothic New",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,monospace;
+}
+*{box-sizing:border-box}
+html{background:var(--ai)}
+body{margin:0;color:var(--washi);font:16px/1.75 var(--gothic);background:var(--ai);overflow-x:hidden;
+  background-image:radial-gradient(1200px 600px at 50% -200px,#2B3B6B 0,transparent 70%),
+  repeating-linear-gradient(0deg,rgba(255,255,255,.012) 0 2px,transparent 2px 4px);}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--kin);outline-offset:3px}
+.wrap{max-width:680px;margin:0 auto;padding:0 16px}
+.zh{font-family:var(--zh)}
+
+/* ---------- 表紙 ---------- */
+.hero{position:relative;overflow:hidden;padding:44px 16px 28px;min-height:520px}
+.ring{position:absolute;right:-150px;top:-40px;width:520px;height:520px;opacity:.22;animation:spin 120s linear infinite;pointer-events:none}
+@keyframes spin{to{transform:rotate(360deg)}}
+.eyebrow{font:500 .72rem/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--kin)}
+.kanji{font:800 clamp(5.5rem,26vw,9.5rem)/.9 var(--mincho);display:flex;gap:.04em;margin:18px 0 6px;color:var(--washi)}
+.kanji span{display:inline-block;opacity:0;transform:translateY(.25em) scale(1.25);filter:blur(8px);animation:ink 1.1s cubic-bezier(.2,.8,.2,1) forwards}
+.kanji span:nth-child(2){animation-delay:.25s;color:var(--shu)}
+@keyframes ink{to{opacity:1;transform:none;filter:none}}
+.h1{font:500 clamp(1.6rem,6.2vw,2.3rem)/1.15 var(--garamond);margin:0;max-width:16em}
+.h1 .w{display:inline-block;opacity:0;transform:translateY(14px);animation:rise .7s cubic-bezier(.2,.8,.2,1) forwards}
+.h1 em{color:var(--kin);font-style:italic}
+@keyframes rise{to{opacity:1;transform:none}}
+.lede{color:var(--mist);max-width:34em;margin:16px 0 0;opacity:0;animation:rise .8s 1.3s forwards}
+
+/* ---------- 入力 ---------- */
+.form{background:var(--washi);color:var(--sumi);border-radius:4px;padding:22px 20px 20px;margin-top:22px;position:relative;
+  box-shadow:0 30px 60px -30px rgba(0,0,0,.6);opacity:0;animation:rise .8s 1.5s forwards}
+.form::before{content:"";position:absolute;inset:6px;border:1px solid rgba(28,26,23,.14);pointer-events:none;border-radius:2px}
+.form .lab{display:block;font:700 .85rem var(--gothic);margin-bottom:6px}
+.form .field{margin-bottom:16px}
+.form .hint{font:400 .78rem/1.5 var(--gothic);color:#6b6254}
+.form input[type=date],.form input[type=time],.form select{font:500 1.05rem var(--mono);padding:11px 12px;border:1px solid #cbbfa8;border-radius:3px;background:#fbf7ef;color:var(--sumi);width:100%}
+.form select{font-family:var(--gothic)}
+.seg{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid #cbbfa8;border-radius:3px;overflow:hidden;margin:6px 0 10px}
+.seg input{position:absolute;opacity:0;pointer-events:none}
+.seg label{display:block;text-align:center;padding:10px 4px;font:500 .84rem/1.25 var(--gothic);cursor:pointer;background:#fbf7ef;border-left:1px solid #cbbfa8}
+.seg label:first-of-type{border-left:0}
+.seg input:checked+label{background:var(--sumi);color:var(--washi)}
+.seg input:focus-visible+label{outline:2px solid var(--shu);outline-offset:-3px}
+.why-time{font:.8rem/1.5 var(--gothic);color:#5e5547;background:#f4ead6;border-left:3px solid var(--kin);padding:7px 10px;margin:0 0 10px}
+.go{position:relative;width:100%;border:0;border-radius:3px;background:var(--sumi);color:var(--washi);font:700 1rem var(--gothic);padding:15px;cursor:pointer;overflow:hidden;transition:transform .12s}
+.go:active{transform:scale(.98)}
+.go .fill{position:absolute;inset:0;background:var(--shu);transform:scaleX(0);transform-origin:left}
+.go.run .fill{animation:fill 1.9s cubic-bezier(.4,0,.2,1) forwards}
+@keyframes fill{to{transform:scaleX(1)}}
+.go span{position:relative}
+[hidden]{display:none!important}
+
+/* ---------- 計算の様子 ---------- */
+.log{font:400 .82rem/1.9 var(--mono);color:var(--mist);margin:22px 0 0;min-height:0;overflow-wrap:anywhere}
+.log div{opacity:0;transform:translateX(-6px);transition:.35s}
+.log div.on{opacity:1;transform:none}
+.log b{color:var(--kin);font-weight:500}
+.log i{font-style:normal;color:var(--g0)}
+
+/* ---------- 結果 ---------- */
+#out{margin-top:8px}
+.sheet{background:var(--washi);color:var(--sumi);border-radius:4px;padding:24px 18px;margin:18px 0;position:relative}
+.sheet h2{font:600 1.5rem/1.2 var(--garamond);margin:0 0 4px}
+.sheet .sub{font:.82rem/1.55 var(--gothic);color:#6b6254;margin:0 0 14px}
+.tag{font:500 .68rem var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--shu)}
+
+/* ① 型名 */
+.typehead{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:center;margin:14px 0 6px}
+.seal{width:84px;height:84px;background:var(--shu);color:#fff3ea;display:grid;place-items:center;font:800 3.1rem/1 var(--mincho);border-radius:6px;
+  box-shadow:inset 0 0 0 3px rgba(255,240,230,.25),inset 0 0 18px rgba(0,0,0,.25);opacity:0;transform:scale(2.4) rotate(-14deg)}
+.seal.on{animation:stamp .5s cubic-bezier(.3,1.6,.5,1) forwards}
+@keyframes stamp{60%{opacity:1;transform:scale(.92) rotate(-6deg)}to{opacity:1;transform:scale(1) rotate(-6deg)}}
+.shake{animation:shake .25s .3s}
+@keyframes shake{25%{transform:translate(1px,2px)}50%{transform:translate(-2px,-1px)}75%{transform:translate(1px,-1px)}}
+.stemline{font:500 .78rem var(--mono);letter-spacing:.1em;text-transform:uppercase;color:#857a68}
+.tname{font:600 clamp(1.9rem,7.6vw,2.6rem)/1.08 var(--garamond);margin:6px 0 0;overflow-wrap:break-word}
+.tzh{font:500 1.15rem/1.4 var(--zh);color:#5e5547;margin-top:6px}
+.tno{font:500 .7rem var(--mono);color:#a3987f;letter-spacing:.08em;margin-top:2px}
+
+/* ② 心の中の1文と1行目 */
+.inner{font:500 italic clamp(1.25rem,5vw,1.5rem)/1.35 var(--garamond);margin:22px 0 4px;padding-left:16px;border-left:3px solid var(--shu)}
+.inner small{display:block;font:500 .62rem var(--mono);font-style:normal;letter-spacing:.14em;text-transform:uppercase;color:var(--shu);margin-bottom:6px}
+.firstline{font:1.02rem/1.7 var(--gothic);margin:14px 0 4px}
+.firstline-zh{font:.92rem/1.75 var(--zh);color:#5e5547;margin:4px 0 0}
+.block{margin-top:22px;padding-top:16px;border-top:1px dashed #cdbfa6}
+.block h3{font:700 .8rem var(--mono);letter-spacing:.12em;text-transform:uppercase;color:#857a68;margin:0 0 6px}
+.block p{margin:0}
+.move{background:var(--sumi);color:var(--washi);border-radius:3px;padding:16px 16px 14px;margin-top:8px;position:relative}
+.move .if{font:600 1.18rem/1.4 var(--garamond)}
+.move .note2{font:.76rem/1.5 var(--gothic);color:var(--mist);margin-top:8px}
+
+/* ⑤ 当たってる？ */
+.fit{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.fit button{flex:1 1 0;min-width:84px;border:1px solid var(--sumi);background:transparent;color:var(--sumi);font:700 .95rem var(--gothic);padding:11px 8px;border-radius:3px;cursor:pointer;transition:background .15s}
+.fit button[aria-pressed=true]{background:var(--sumi);color:var(--washi)}
+.fit-reply{font:.86rem/1.6 var(--gothic);color:#5e5547;margin-top:10px;min-height:1.2em}
+.fit-reply:empty{min-height:0;margin:0}
+
+/* 1タップの問い（全部任意） */
+.ask{margin:10px 0 0}
+.ask .q{font:500 .66rem var(--mono);letter-spacing:.12em;text-transform:uppercase;color:#857a68;margin:0 0 6px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips button{border:1px solid #b9ab92;background:#fbf7ef;color:var(--sumi);font:500 .84rem/1.2 var(--gothic);padding:8px 11px;border-radius:999px;cursor:pointer;transition:background .15s}
+.chips button[aria-pressed=true]{background:var(--sumi);color:var(--washi);border-color:var(--sumi)}
+.scene-out{font:.95rem/1.65 var(--gothic);margin:10px 0 0;padding:10px 12px;background:#f7eedd;border-left:3px solid var(--shu);border-radius:0 3px 3px 0}
+.scene-out b{font:500 .62rem var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--shu);display:block;margin-bottom:2px}
+.scene-out:empty{display:none}
+
+/* 1手を選ぶ */
+.moves{display:grid;gap:8px;margin-top:8px}
+.moves .move{display:grid;gap:10px;margin-top:0;transition:opacity .2s}
+.moves .move .if{font-size:1.08rem}
+.moves .pick{justify-self:start;border:1px solid var(--kin);background:transparent;color:var(--kin);font:700 .82rem var(--gothic);padding:7px 12px;border-radius:3px;cursor:pointer}
+.moves .move.on{box-shadow:inset 0 0 0 2px var(--kin)}
+.moves .move.on .pick{background:var(--kin);color:var(--sumi)}
+.moves.chosen .move:not(.on){opacity:.45}
+.moves-note{font:.76rem/1.5 var(--gothic);color:#6b6254;margin:8px 0 0}
+.remind{margin-top:12px;padding:12px;border:1px dashed #b9ab92;border-radius:3px}
+.remind p{margin:0 0 8px;font:.88rem/1.55 var(--gothic)}
+.remind .btns a{text-decoration:none;display:inline-block}
+.remind-done{font:.82rem/1.5 var(--gothic);color:#5e5547;margin-top:8px}
+.remind-done:empty{display:none}
+
+/* 1週間後 */
+.check{margin-top:22px}
+.check .if{font:600 1.15rem/1.4 var(--garamond);margin:6px 0 4px}
+
+/* 重い人への一言 */
+.heavy{border-left:3px solid var(--mist);padding:6px 0 6px 12px;margin:14px 0;font:.84rem/1.65 var(--gothic);color:#d8cfbf}
+.heavy b{color:var(--washi)}
+.heavy a{color:var(--kin)}
+button.buy{width:100%;border:0;cursor:pointer;text-align:left}
+.buy-note{font:.8rem/1.55 var(--gothic);color:#d8cfbf;margin-top:8px;position:relative;z-index:1}
+.buy-note:empty{display:none}
+
+/* 2つの間・時刻で変わる */
+.alt{background:#f7eedd;border:1px solid #e2d3b6;border-radius:3px;padding:14px 14px 12px;margin-top:18px}
+.alt .k{font:500 .66rem var(--mono);letter-spacing:.12em;text-transform:uppercase;color:#857a68}
+.alt .n{font:600 1.25rem/1.2 var(--garamond);margin:4px 0 2px}
+.alt .n .zh{font-size:.9rem;color:#6b6254;margin-left:6px;font-weight:500}
+.alt p{margin:6px 0 0;font-size:.9rem}
+
+/* 数え方を見る */
+details.how{margin-top:20px;border-top:1px solid #d9cdb5;padding-top:12px}
+details.how summary{cursor:pointer;font:700 .88rem var(--gothic);list-style:none}
+details.how summary::-webkit-details-marker{display:none}
+details.how summary::before{content:"＋";display:inline-block;width:1.4em;color:var(--shu)}
+details.how[open] summary::before{content:"－"}
+.pillars{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:14px 0}
+.pl{background:#fbf7ef;border:1px solid #d9cdb5;border-radius:3px;text-align:center;padding:8px 2px 6px;min-width:0}
+.pl .lab{font:500 .58rem var(--mono);letter-spacing:.08em;color:#857a68;text-transform:uppercase}
+.pl .god{font:500 .66rem/1.3 var(--zh);color:#6b6254;min-height:1.3em}
+.pl .ch{font:700 1.9rem/1.15 var(--mincho)}
+.pl .hid{font:500 .8rem/1.35 var(--mincho);margin-top:4px;border-top:1px dashed #d9cdb5;padding-top:4px}
+.pl .hid small{display:block;font:400 .56rem var(--zh);color:#857a68}
+.pl.dm{background:var(--sumi);color:var(--washi);border-color:var(--sumi)}
+.pl.dm .lab,.pl.dm .god,.pl.dm .hid small{color:var(--kin)}
+.gbars{display:grid;gap:8px;margin-top:6px}
+.gb{display:grid;grid-template-columns:6.4rem 1fr 2.2rem;gap:10px;align-items:center;font:.82rem var(--gothic)}
+.gb .zh{font-weight:700;margin-right:4px}
+.gb.top{font-weight:700}
+.bar{height:10px;background:#e0d5c0;border-radius:5px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;border-radius:5px;transition:width 1.1s cubic-bezier(.2,.8,.2,1)}
+.gb b{font:500 .85rem var(--mono);text-align:right}
+.small{font:.8rem/1.6 var(--gothic);color:#6b6254;margin:12px 0 0}
+
+/* ⑥ 共有 */
+.share{display:grid;gap:10px;justify-items:start}
+.share canvas{width:100%;max-width:320px;border-radius:4px;box-shadow:0 12px 30px -14px rgba(0,0,0,.5)}
+.btns{display:flex;gap:8px;flex-wrap:wrap}
+.btn2{border:1px solid var(--sumi);background:transparent;color:var(--sumi);font:700 .9rem var(--gothic);padding:10px 14px;border-radius:3px;cursor:pointer}
+.btn2[disabled]{opacity:.55;cursor:not-allowed}
+
+/* ⑦ 相性 */
+.pair{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.pair .soon{font:500 .66rem var(--mono);letter-spacing:.12em;text-transform:uppercase;background:var(--sumi);color:var(--kin);padding:4px 8px;border-radius:2px}
+
+/* ⑧ 手帳 */
+.offer{background:var(--sumi);color:var(--washi);border-radius:4px;padding:24px 18px;margin:18px 0;position:relative;overflow:hidden}
+.offer::after{content:"暦";position:absolute;right:-10px;bottom:-40px;font:800 9rem/1 var(--mincho);color:rgba(200,163,91,.08);pointer-events:none}
+.offer h3{font:600 1.45rem/1.2 var(--garamond);margin:4px 0 8px}
+.offer .lead2{color:#d8cfbf;margin:0 0 14px;font-size:.92rem}
+.glance{display:grid;grid-template-columns:repeat(13,1fr);gap:3px;margin:0 0 16px}
+.glance div{background:rgba(255,255,255,.06);border-radius:2px;text-align:center;padding:5px 0 4px;font:500 .58rem/1.3 var(--mono);color:var(--mist);min-width:0}
+.glance div b{display:block;font:700 .82rem/1.2 var(--gothic);color:var(--washi)}
+.glance div.w{background:rgba(212,67,44,.35)}
+.glance div.p{background:rgba(78,138,92,.35)}
+.legend{font:.72rem/1.5 var(--gothic);color:var(--mist);margin:-8px 0 16px}
+.page{background:var(--washi);color:var(--sumi);border-radius:3px;padding:18px 16px;position:relative;z-index:1;box-shadow:0 18px 40px -20px rgba(0,0,0,.7)}
+.page .ph{display:flex;justify-content:space-between;gap:10px;align-items:baseline;flex-wrap:wrap;border-bottom:1px solid #cbbfa8;padding-bottom:8px}
+.page .ph b{font:600 1.15rem var(--garamond)}
+.page .ph span{font:500 .72rem var(--mono);color:#857a68}
+.page .lbl{display:inline-block;font:700 .68rem var(--mono);letter-spacing:.1em;text-transform:uppercase;background:var(--shu);color:#fff;padding:3px 7px;border-radius:2px;margin:12px 0 4px}
+.page .lbl.p{background:var(--g0)}
+.page .lbl.o{background:#857a68}
+.page h4{font:700 .66rem var(--mono);letter-spacing:.12em;text-transform:uppercase;color:#857a68;margin:14px 0 4px}
+.page p{margin:0;font-size:.92rem;line-height:1.65}
+.page .if{font:600 1.05rem/1.4 var(--garamond)}
+.page .opts{font-size:.8rem;color:#6b6254;margin-top:4px}
+.page .tick{display:flex;gap:12px;flex-wrap:wrap;font-size:.82rem;margin-top:8px}
+.page .tick span::before{content:"";display:inline-block;width:.9em;height:.9em;border:1.5px solid var(--sumi);border-radius:2px;margin-right:5px;vertical-align:-1px}
+.page .lineout{border-bottom:1px solid #cbbfa8;height:1.6em;margin-top:6px}
+.sample{position:absolute;top:10px;right:-30px;transform:rotate(30deg);background:var(--kin);color:var(--sumi);font:700 .62rem var(--mono);letter-spacing:.14em;padding:3px 34px}
+.buy{display:flex;justify-content:space-between;align-items:center;gap:12px;background:var(--shu);color:#fff;text-decoration:none;border-radius:3px;padding:15px 16px;font:700 1rem var(--gothic);transition:transform .12s,background .2s;position:relative;z-index:1;margin-top:16px}
+.buy:hover{background:#e04f37}
+.buy:active{transform:scale(.98)}
+.buy .price{font:500 1.05rem var(--mono);white-space:nowrap}
+.honest{font:.78rem/1.6 var(--gothic);color:var(--mist);margin-top:12px;position:relative;z-index:1}
+
+/* ⑨ メール */
+.mail{display:grid;grid-template-columns:1fr auto;gap:8px;margin-top:10px}
+.mail input{font:500 1rem var(--gothic);padding:11px 12px;border:1px solid #cbbfa8;border-radius:3px;background:#fbf7ef;color:var(--sumi);min-width:0}
+.mail button{border:0;border-radius:3px;background:var(--sumi);color:var(--washi);font:700 .9rem var(--gothic);padding:0 16px;cursor:pointer;white-space:nowrap}
+.mail-note{font:.8rem/1.55 var(--gothic);color:#6b6254;margin-top:8px}
+
+.note{border-left:3px solid var(--kin);padding:6px 0 6px 12px;margin:14px 0;font:.85rem/1.6 var(--gothic);color:#d8cfbf}
+footer{margin:40px 0 50px;font:.76rem/1.7 var(--gothic);color:var(--mist);border-top:1px solid rgba(255,255,255,.1);padding-top:16px}
+.reveal{opacity:0;transform:translateY(14px);transition:.7s cubic-bezier(.2,.8,.2,1)}
+.reveal.on{opacity:1;transform:none}
+
+@media (max-width:420px){
+  .glance{grid-template-columns:repeat(7,1fr)}
+  .gb{grid-template-columns:5.6rem 1fr 2rem}
+  .typehead{grid-template-columns:auto 1fr;gap:12px}
+  .seal{width:68px;height:68px;font-size:2.5rem}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001s!important;animation-delay:0s!important;transition-duration:.001s!important}
+  .ring{animation:none}
+}
+</style>
+</head>
+<body>
+<header class="hero wrap">
+  <svg class="ring" viewBox="-100 -100 200 200" aria-hidden="true">
+    <circle r="96" fill="none" stroke="#C8A35B" stroke-width=".6"/>
+    <circle r="70" fill="none" stroke="#C8A35B" stroke-width=".4" stroke-dasharray="2 3"/>
+    <g font-family="Shippori Mincho" font-size="13" fill="#C8A35B" text-anchor="middle" id="ringtext"></g>
+  </svg>
+  <div class="eyebrow">BaZi Type · 八字类型</div>
+  <div class="kanji" aria-hidden="true"><span>八</span><span>字</span></div>
+  <h1 class="h1" id="h1">The pattern you keep repeating, <em>named</em> from your BaZi chart</h1>
+  <p class="lede">Your Day Master and the strongest group of Ten Gods in your chart point to one of 50 patterns: a strength you lean on a little too often. See what it costs you, what it gives you, and one small move for this month. Free, no sign-up, and your birth date never leaves your device.</p>
+  <section class="sheet check" id="checkin" hidden aria-live="polite"></section>
+
+  <form class="form" id="f">
+    <div class="field">
+      <label class="lab" for="d">Date of birth</label>
+      <input type="date" id="d" required min="1930-01-01" max="2026-12-31">
+    </div>
+    <div class="field">
+      <span class="lab" id="tlab">Time of birth</span>
+      <div class="seg" role="radiogroup" aria-labelledby="tlab">
+        <input type="radio" name="tm" id="tm-exact" value="exact" checked><label for="tm-exact">I know the time</label>
+        <input type="radio" name="tm" id="tm-rough" value="rough"><label for="tm-rough">Roughly</label>
+        <input type="radio" name="tm" id="tm-none" value="none"><label for="tm-none">I don't know</label>
+      </div>
+      <p class="why-time">Adding your time makes your pattern clearer: we read all 8 characters of your chart instead of 6.</p>
+      <div id="box-exact"><input type="time" id="t" aria-label="Time of birth"></div>
+      <div id="box-rough" hidden>
+        <select id="rough" aria-label="Rough time of birth">
+          <option value="morning">Morning (5–11 am)</option>
+          <option value="afternoon">Afternoon (11 am–5 pm)</option>
+          <option value="evening">Evening (5–11 pm)</option>
+          <option value="night">Night (11 pm–5 am)</option>
+        </select>
+      </div>
+      <p class="hint" id="box-none" hidden>That's fine. We'll try all 12 possible birth hours and tell you honestly if your pattern could change.</p>
+    </div>
+    <button class="go" id="go"><span class="fill"></span><span id="golabel">Find my pattern</span></button>
+  </form>
+  <div class="log" id="log" aria-live="polite"></div>
+</header>
+
+<main class="wrap" id="out" aria-live="polite"></main>
+
+<div class="wrap">
+  <footer>
+    For reflection and entertainment. Nothing here predicts events or replaces professional advice. Calculated for Singapore clock time, including the UTC+7:30 years before 1982. <a href="about.html#how">How we count</a>.
+    <br><a href="about.html">About</a> · <a href="privacy.html">Privacy</a> · <a href="disclosure.html">Affiliate disclosure</a> · hello@bazitype.com
+  </footer>
+</div>
+
+<script src="calc.js"></script>
+<script src="types.js"></script>
+<script src="events.js"></script>
+<script>
+const RM=matchMedia("(prefers-reduced-motion: reduce)").matches;
+const wait=ms=>new Promise(r=>setTimeout(r,RM?0:ms));
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+/* 手帳の見本の文（正：research_notes/占いシンガポール/中身_癖の型/手帳の組み立て.md の 5・5b。たたき台）*/
+const REL_NOTE={same:"your pattern gets extra fuel from the month itself",fuel:"things around you quietly feed your pattern",outlet:"a good month to turn your strength into something else",brake:"the month itself helps you hold back; your move is easiest now",push:"your pattern tends to land on people or money"};
+const MONTH_TEXT=[
+ {same:"This month adds more of your own drive — more \"I'll handle it\", more keeping up with friends. Good for standing firm; it's also when you're most likely to carry it all alone.",
+  fuel:"Support, study and family advice are around you this month — and they quietly strengthen your \"I can do it myself\". Notice when help is offered and you wave it away.",
+  outlet:"Your energy wants to come out as words or something you make this month. A good month to say what you need out loud rather than just pushing through.",
+  brake:"Rules, deadlines and other people's expectations press on you this month. That makes it the easiest month to let someone else hold one piece.",
+  push:"Your pattern tends to land on money this month — treating, lending, splitting with friends. Before you pay for someone, check one number first."},
+ {same:"This month adds more of your own energy — more ideas, more to say. Lovely for creating; it's also when the sharp comment or the extra project slips out most easily.",
+  fuel:"People like you this month — peers, friends, rivals — keep sparking you. Notice when \"one more idea\" is really you keeping up with someone else.",
+  outlet:"Your ideas can turn into something real this month: a finished piece, a paid task, a plan with a date. A good month to finish rather than start.",
+  brake:"Learning, rest and quiet time slow your flow a little this month. That makes it the easiest month to hold back one comment or one new start.",
+  push:"Your pattern tends to push against rules and bosses this month. If something feels unfair, write it down first and raise it the next day."},
+ {same:"This month adds more of your drive to get results — more tasks, more plans, more providing. Good for finishing; it's also when rest feels hardest to justify.",
+  fuel:"New ideas and side projects spark easily this month, and each one feeds your urge to build. Notice when \"one more thing\" is crowding out a free evening.",
+  outlet:"Your effort can turn into recognition or a clearer role this month. A good month to ask for credit for what you've already done, rather than add more.",
+  brake:"Friends and peers pull you away from work this month. That makes it the easiest month to say yes to an evening with nothing to show for it.",
+  push:"Your pattern tends to push past rest and quiet this month — study, sleep and family time get squeezed. If you cancel something restful, put it back on another day that week."},
+ {same:"This month adds more duty and more expectations — from work, family, people who rely on you. Good for showing you're dependable; it's also when one more \"yes\" slips out most easily.",
+  fuel:"Money, targets and results are loud this month, and they feed your sense that you must keep holding everything. Notice when \"I have to\" is really \"I'm used to\".",
+  outlet:"Pressure can turn into learning this month — a course, a mentor, a quiet weekend. A good month to put one hour into yourself on purpose.",
+  brake:"Your own voice is stronger this month — ideas, opinions, the urge to speak up. That makes it the easiest month to say one honest \"not this time\".",
+  push:"Your pattern tends to press on your own time this month — friends, rest, the plans that were just for you. If you cancel plans with a friend for work, set the new date the same day."},
+ {same:"This month adds more of your wish to be sure — more reading, more checking, more asking. Good for learning; it's also when \"not yet\" comes most easily.",
+  fuel:"Expectations from bosses, parents and rules are louder this month, and they feed your habit of waiting for a yes. Notice whose approval you are actually waiting for.",
+  outlet:"What you've learned can turn into your own step this month. A good month to decide one thing on your own and tell people after.",
+  brake:"Practical matters — money, deadlines, results — pull you into action this month. That makes it the easiest month to start before you feel ready.",
+  push:"Your pattern tends to hold back your own words and plans this month. If you notice you've drafted the same idea twice, share the second draft."}
+];
+const MONTH_Q=["When did you let someone help this month — and what did it actually cost you?","Which idea or comment did you hold for a day this month, and what changed because you waited?","What did you do this month that had no result at all — and how did it feel?","Which yes this month was really yours, and which one did you say for someone else?","What did you start this month before you felt ready?"];
+const EVENT_TEXT={dayClash:"This month can stir things with the person closest to you. If a decision about \"us\" comes up, set a date to talk instead of agreeing on the spot.",
+  dayCombine:"This month pulls you towards the people you love — lovely, and also the easiest month to say yes to everything they ask.",
+  monthClash:"Work or home routines may shift this month. Decide one thing you'll keep the same.",
+  yearClash:"Family topics (parents, housing, plans) may come up. Your pattern is strongest here, so note what you want before the conversation."};
+const EVENT_ORDER=["dayClash","dayCombine","monthClash","yearClash"];
+const MON=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+
+
+/* 結果のあとの1タップの問い・1手を選ぶ・1週間後に戻る道（2026-11-10 公開判断の1〜3）。送るのは events.js の sendEvent だけ */
+const SITE="https://bazitype.com/";
+const SHARE_URL=SITE+"?from=card";
+const SCENES=[["Work","Work","At work"],["Money","Money","With money"],["Love","Love","In love"],["Family","Family","With family"],["Self-worth","How I see myself","How you see yourself"]];
+const cap=s=>s.charAt(0).toUpperCase()+s.slice(1);
+const pad=n=>String(n).padStart(2,"0");
+const utcStamp=d=>d.getUTCFullYear()+pad(d.getUTCMonth()+1)+pad(d.getUTCDate())+"T"+pad(d.getUTCHours())+pad(d.getUTCMinutes())+"00Z";
+const checkUrl=(n,i)=>SITE+"?check="+n+"&move="+(i+1);
+const DOW=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+/* 7日後のシンガポール夜8時（UTC 12時）から15分 */
+function remindTimes(){ const sg=new Date(Date.now()+8*36e5+7*864e5);
+  const s=new Date(Date.UTC(sg.getUTCFullYear(),sg.getUTCMonth(),sg.getUTCDate(),12,0)); return [s,new Date(s.getTime()+15*60000)]; }
+const icsText=s=>String(s).replace(/\\/g,"\\\\").replace(/;/g,"\\;").replace(/,/g,"\\,").replace(/\r?\n/g,"\\n");
+/* 1行75バイトまで（英字以外の “ — などで切れないよう文字ごとに数える） */
+function icsFold(line){ const enc=new TextEncoder(), out=[]; let cur="", n=0;
+  for(const ch of line){ const b=enc.encode(ch).length; if(n+b>72){ out.push(cur); cur=""; n=0; } cur+=ch; n+=b; }
+  out.push(cur); return out.join("\r\n "); }
+function makeIcs(title,details,url,s,e,n,i){
+  return ["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//BaZi Type//Reminder//EN","CALSCALE:GREGORIAN","METHOD:PUBLISH","BEGIN:VEVENT",
+    "UID:check-"+n+"-"+(i+1)+"-"+Date.now()+"@bazitype.com","DTSTAMP:"+utcStamp(new Date()),"DTSTART:"+utcStamp(s),"DTEND:"+utcStamp(e),
+    "SUMMARY:"+icsText(title),"DESCRIPTION:"+icsText(details),"URL:"+url,
+    "BEGIN:VALARM","TRIGGER:PT0M","ACTION:DISPLAY","DESCRIPTION:"+icsText(title),"END:VALARM","END:VEVENT","END:VCALENDAR"].map(icsFold).join("\r\n")+"\r\n";
+}
+function showRemind(rem,t,i,ctx){
+  const [s,e]=remindTimes(), url=checkUrl(t.n,i), sg=new Date(s.getTime()+8*36e5);
+  const day=DOW[sg.getUTCDay()]+" "+sg.getUTCDate()+" "+MON[sg.getUTCMonth()];
+  const title="BaZi Type: did you try your move?";
+  const details="A week ago you picked: "+t.moves[i]+"\n\nOne tap to check in: "+url;
+  const g="https://calendar.google.com/calendar/render?action=TEMPLATE&text="+encodeURIComponent(title)+"&dates="+utcStamp(s)+"/"+utcStamp(e)+"&details="+encodeURIComponent(details);
+  rem.hidden=false;
+  rem.innerHTML='<p><b>Remind me in 7 days</b> — one calendar note on '+day+', 8 pm, with a link back to this move. No email, no sign-up.</p>'+
+    '<div class="btns"><button type="button" class="btn2" data-k="ics">iPhone · Apple Calendar</button><a class="btn2" data-k="google" href="'+esc(g)+'" target="_blank" rel="noopener">Google Calendar</a></div><div class="remind-done" aria-live="polite"></div>';
+  const done=rem.querySelector(".remind-done");
+  rem.querySelector('[data-k=ics]').addEventListener("click",()=>{
+    const bl=new Blob([makeIcs(title,details,url,s,e,t.n,i)],{type:"text/calendar;charset=utf-8"});
+    const a=document.createElement("a"); a.href=URL.createObjectURL(bl); a.download="bazitype-check-in.ics"; document.body.appendChild(a); a.click();
+    setTimeout(()=>{URL.revokeObjectURL(a.href); a.remove();},4000);
+    done.textContent="Open the file to add it to your calendar. See you on "+day+".";
+    sendEvent("remind",{type:t.n,move:i+1,how:"ics",ctx});
+  });
+  rem.querySelector('[data-k=google]').addEventListener("click",()=>{ done.textContent="Save it in Google Calendar. See you on "+day+"."; sendEvent("remind",{type:t.n,move:i+1,how:"google",ctx}); });
+}
+/* 1手を3つ（または一部）から選ぶ。選ぶと「7日後に知らせる」が出る */
+function movePicker(t,ctx,only){
+  const idx=only||[0,1,2], box=document.createElement("div");
+  box.innerHTML='<div class="moves">'+idx.map(i=>'<div class="move" data-i="'+i+'"><div class="if">'+esc(t.moves[i])+'</div><button type="button" class="pick" aria-pressed="false">I\'ll try this</button></div>').join('')+'</div>'+
+    '<p class="moves-note">'+(idx.length>1?'Pick the one that feels most doable. ':'')+'Small on purpose. Doing it once counts.</p><div class="remind" hidden></div>';
+  const list=box.querySelector(".moves"), rem=box.querySelector(".remind");
+  list.querySelectorAll(".pick").forEach(b=>b.addEventListener("click",()=>{
+    const mv=b.parentNode, i=+mv.dataset.i;
+    list.querySelectorAll(".move").forEach(x=>{ const on=x===mv, p=x.querySelector(".pick"); x.classList.toggle("on",on); p.setAttribute("aria-pressed",String(on)); p.textContent=on?"✓ I'll try this":"I'll try this"; });
+    list.classList.add("chosen");
+    sendEvent("move_pick",{type:t.n,move:i+1,ctx});
+    showRemind(rem,t,i,ctx);
+  }));
+  return box;
+}
+/* 1タップの選択肢（chips）。押したら cb(値, ボタン) */
+function chips(items,cb){
+  const d=document.createElement("div"); d.className="chips"; d.setAttribute("role","group");
+  d.innerHTML=items.map(([v,l])=>'<button type="button" data-v="'+esc(v)+'" aria-pressed="false">'+esc(l)+'</button>').join('');
+  d.querySelectorAll("button").forEach(b=>b.addEventListener("click",()=>{ d.querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",String(x===b))); cb(b.dataset.v,b); }));
+  return d;
+}
+
+/* 1週間後：?check=型&move=番号 で開いたとき */
+(function(){
+  let n=0, mv=0;
+  try{ const q=new URLSearchParams(location.search); n=parseInt(q.get("check"),10)||0; mv=parseInt(q.get("move"),10)||0; }catch(_){}
+  const valid=n>=1&&n<=50&&mv>=1&&mv<=3;
+  sendEvent("view",valid?{check:n,move:mv}:{});
+  if(!valid) return;
+  const t=TYPES.find(x=>x.n===n); if(!t) return; const i=mv-1;
+  const box=$("#checkin"); box.hidden=false;
+  box.innerHTML='<div class="tag">Your check-in · one week later</div><h2>A week ago you picked:</h2>'+
+    '<div class="move"><div class="if">'+esc(t.moves[i])+'</div><div class="note2">'+esc(t.name)+' · No. '+t.n+'</div></div>'+
+    '<div class="block"><h3>Did you try it?</h3><div class="fit" id="ck"></div><div class="fit-reply" id="ckreply" aria-live="polite"></div><div id="ckmore"></div></div>';
+  const ck=$("#ck"), reply=$("#ckreply"), more=$("#ckmore");
+  ck.innerHTML='<button type="button" data-a="yes" aria-pressed="false">Yes</button><button type="button" data-a="partly" aria-pressed="false">Partly</button><button type="button" data-a="notyet" aria-pressed="false">Not yet</button>';
+  ck.querySelectorAll("button").forEach(b=>b.addEventListener("click",()=>{
+    ck.querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",String(x===b)));
+    const a=b.dataset.a; sendEvent("check",{type:n,move:mv,answer:a}); more.innerHTML="";
+    if(a==="yes"){ reply.textContent="That counts. Doing it once was the whole point. If you want another week, keep the same move or pick a new one:"; more.appendChild(movePicker(t,"checkin")); }
+    else if(a==="partly"){ reply.textContent="Partly counts. The part you did is already a change. Try the same move once more, or a different one:"; more.appendChild(movePicker(t,"checkin")); }
+    else{
+      reply.textContent="That's useful to know too. What got in the way?";
+      const why={time:["Then make it smaller: just the first two minutes of it, once. Same move, one more week:",[i]],
+        awkward:["Awkward is normal when a move goes against an old habit. Try it first with the person it's easiest with:",[i]],
+        forgot:["Very common. Set the reminder again — this time on a day you're usually free:",[i]],
+        fit:["Thanks for saying so. Then try one of the other two:",[0,1,2].filter(x=>x!==i)]};
+      const ex=document.createElement("div"); ex.className="ask";
+      const p=document.createElement("div"); p.className="fit-reply";
+      ex.appendChild(chips([["time","No time"],["awkward","Felt awkward"],["forgot","Forgot"],["fit","Didn't fit me"]],v=>{
+        sendEvent("check_block",{type:n,move:mv,reason:v});
+        p.textContent=why[v][0]; const old=ex.querySelector(".picker"); if(old) old.remove();
+        const pk=movePicker(t,"checkin-"+v,why[v][1]); pk.className="picker"; ex.appendChild(pk);
+      }));
+      ex.appendChild(p); more.appendChild(ex);
+    }
+  }));
+})();
+
+/* 表紙：見出しの言葉を順に出す・輪に十干十二支 */
+(function(){
+  const h=$("#h1"); const parts=h.innerHTML.split(/(<em>.*?<\/em>|\s+)/).filter(x=>x&&x.trim());
+  h.innerHTML=parts.map((w,i)=>'<span class="w" style="animation-delay:'+(0.55+i*0.07)+'s">'+w+'</span>').join(' ');
+  const g=$("#ringtext"); const chars=(STEMS_ZH+BR).split("");
+  chars.forEach((c,i)=>{const a=i/chars.length*2*Math.PI; const t=document.createElementNS("http://www.w3.org/2000/svg","text");
+    t.setAttribute("x",(83*Math.sin(a)).toFixed(1)); t.setAttribute("y",(-83*Math.cos(a)+4).toFixed(1)); t.textContent=c; g.appendChild(t);});
+})();
+
+/* 時刻の3択 */
+document.querySelectorAll('input[name=tm]').forEach(x=>x.addEventListener("change",()=>{
+  const v=document.querySelector('input[name=tm]:checked').value;
+  $("#box-exact").hidden=v!=="exact"; $("#box-rough").hidden=v!=="rough"; $("#box-none").hidden=v!=="none";
+}));
+
+const T=i=>TYPES[i];
+const fullName=t=>t.stem+" · "+t.name;
+
+function wrapText(x,text,maxW){ const words=text.split(" "), lines=[]; let cur="";
+  for(const w of words){ const t=cur?cur+" "+w:w; if(x.measureText(t).width>maxW&&cur){lines.push(cur);cur=w;} else cur=t; }
+  if(cur) lines.push(cur); return lines; }
+function shareCard(t,dm){
+  const c=document.createElement("canvas"); c.width=1080; c.height=1350; const x=c.getContext("2d");
+  x.fillStyle="#16213B"; x.fillRect(0,0,1080,1350);
+  x.strokeStyle="rgba(200,163,91,.35)"; x.lineWidth=2; x.beginPath(); x.arc(880,250,300,0,7); x.stroke();
+  x.fillStyle="#C8A35B"; x.font="500 34px 'IBM Plex Mono'"; x.fillText("MY BAZI TYPE",90,150);
+  x.font="500 34px 'Noto Serif SC'"; x.fillText("我的八字类型",90,200);
+  x.save(); x.translate(240,400); x.rotate(-0.1); x.fillStyle="#D4432C"; x.fillRect(-130,-130,260,260);
+  x.fillStyle="#FFF3EA"; x.font="800 190px 'Shippori Mincho'"; x.textAlign="center"; x.fillText(STEMS_ZH[dm],0,66); x.restore();
+  x.fillStyle="#9AA3B9"; x.font="500 40px 'IBM Plex Mono'"; x.fillText(t.stem.toUpperCase(),90,640);
+  x.fillStyle="#EFE7D8"; x.font="600 92px 'Cormorant Garamond'";
+  let y=740; for(const ln of wrapText(x,t.name,900).slice(0,3)){ x.fillText(ln,90,y); y+=92; }
+  x.fillStyle="#C8A35B"; x.font="500 46px 'Noto Serif SC'"; x.fillText(t.zhStem+" · "+t.zhName,90,y+14); y+=100;
+  x.fillStyle="#D8CFBF"; x.font="italic 500 46px 'Cormorant Garamond'";
+  for(const ln of wrapText(x,"“"+t.inner+"”",900).slice(0,3)){ x.fillText(ln,90,y); y+=56; }
+  x.fillStyle="#C8A35B"; x.font="500 34px 'IBM Plex Mono'"; x.fillText("Find yours · bazitype.com",90,1270);
+  return c;
+}
+
+async function typeLog(lines){
+  const log=$("#log"); log.innerHTML="";
+  for(const l of lines){const d=document.createElement("div"); d.innerHTML=l; log.appendChild(d); await wait(30); d.classList.add("on"); await wait(380);}
+}
+
+$("#f").addEventListener("submit",async e=>{
+  e.preventDefault();
+  const ds=$("#d").value; if(!ds) return;
+  const mode=document.querySelector('input[name=tm]:checked').value;
+  const ts=mode==="exact"?($("#t").value||null):null, rough=mode==="rough"?$("#rough").value:null;
+  const go=$("#go"); go.disabled=true; go.classList.remove("run"); void go.offsetWidth; go.classList.add("run"); $("#golabel").textContent="Counting your chart…";
+  const out=$("#out"); out.innerHTML="";
+  const r=kuse(ds,ts,rough), fp=r.pillars, dm=r.dm, t=T(r.typeIndex), t2=T(r.secondIndex);
+  const [y,m,d]=ds.split("-").map(Number); const off=r.offset;
+  const rs=new Date(risshunUTCms(y)+off*3600000);
+  const g=r.groups.map(v=>Math.round(v*10)/10), total=(fp.hour?8:6);
+  await typeLog([
+    '› Singapore clock for '+ds+': <b>UTC+'+({8:"8",7.5:"7:30",9:"9",7:"7"}[off]||"7:20")+'</b> <i>✓</i>',
+    '› Li Chun '+y+': <b>'+rs.toISOString().slice(5,10).replace("-","/")+'</b> · year <b>'+fp.year+'</b> · month <b>'+fp.month+'</b> · day <b>'+fp.day+'</b>'+(fp.hour?' · hour <b>'+fp.hour+'</b>':'')+' <i>✓</i>',
+    '› Ten Gods counted from Day Master <b>'+STEMS_ZH[dm]+' '+STEMS[dm]+'</b> (month branch ×2) <i>✓</i>',
+    r.mode==="exact"?'› Strongest group: <b>'+GROUPS_EN[r.top]+' '+GROUPS_ZH[r.top]+' '+g[r.top].toFixed(1)+'</b> of '+total+' <i>✓</i>'
+      :'› Tried '+r.tried+' possible birth hours: <b>'+GROUPS_EN[r.top]+' '+GROUPS_ZH[r.top]+'</b> in '+r.stable+' of '+r.tried+' <i>✓</i>'
+  ]);
+  $("#golabel").textContent="Look up another date"; go.disabled=false;
+
+  /* ①〜⑤ 型 */
+  const card=document.createElement("section"); card.className="sheet";
+  let alt="";
+  if(r.mode==="exact"&&r.near){
+    alt='<div class="alt"><div class="k">Between two patterns · 两种之间</div><p>Your chart is close between two groups ('+GROUPS_EN[r.top]+' '+g[r.top].toFixed(1)+' and '+GROUPS_EN[r.second]+' '+g[r.second].toFixed(1)+'). You may also recognise yourself in:</p>'+
+      '<div class="n">'+esc(fullName(t2))+'<span class="zh">'+esc(t2.zhName)+'</span></div><p>'+esc(t2.line)+'</p></div>';
+  } else if(r.mode!=="exact"&&r.stable<r.tried){
+    const where=r.mode==="none"?"Without your birth time, we read 6 of your 8 characters.":"With a rough time, we tried the 3 birth hours in your "+ROUGH[rough].label+".";
+    alt='<div class="alt"><div class="k">Your time could change this</div><p>'+where+' Your pattern came out as <b>'+esc(t.name)+'</b> for '+r.stable+' of the '+r.tried+' possible birth hours. If you know your time'+(r.mode==="none"?' (even roughly: morning, afternoon, evening, night)':'')+', add it — your pattern may shift to:</p>'+
+      '<div class="n">'+esc(fullName(t2))+'<span class="zh">'+esc(t2.zhName)+'</span></div><p>'+esc(t2.line)+'</p></div>';
+  } else if(r.mode!=="exact"){
+    alt='<div class="alt"><div class="k">Your time won\'t change this</div><p>Your pattern stays the same for '+(r.mode==="none"?'whatever hour you were born':'every hour in your '+ROUGH[rough].label)+', so '+(r.mode==="none"?'your birth time':'the exact time')+' won\'t change it.</p></div>';
+  }
+  card.innerHTML='<div class="tag">Your BaZi Type · 你的八字类型</div>'+
+    '<div class="typehead"><div class="seal" id="seal">'+STEMS_ZH[dm]+'</div><div><div class="stemline">'+esc(t.stem)+' · '+GROUPS_EN[r.top]+'</div>'+
+      '<div class="tno">No. '+t.n+' of 50</div></div></div>'+
+    '<h2 class="tname">'+esc(t.name)+'</h2><div class="tzh">'+esc(t.zhStem)+' · '+esc(t.zhName)+'</div>'+
+    '<p class="inner"><small>The voice in your head</small>“'+esc(t.inner)+'”</p>'+
+    '<div class="ask" id="scene"><p class="q">Where does this show up most right now?</p><div id="scenechips"></div><p class="scene-out" id="sceneout" aria-live="polite"></p></div>'+
+    '<p class="firstline">'+esc(t.line)+'</p><p class="firstline-zh">'+esc(t.zhLine)+'</p>'+
+    '<div class="block"><h3>The strength underneath</h3><p>'+esc(t.strength)+'</p></div>'+
+    '<div class="block"><h3>Pick one small move for this month</h3><div id="movebox"></div></div>'+
+    '<div class="block"><h3>Does this sound like you?</h3><div class="fit" role="group" aria-label="Does this sound like you?">'+
+      '<button type="button" data-a="yes" aria-pressed="false">Yes</button><button type="button" data-a="partly" aria-pressed="false">Partly</button><button type="button" data-a="no" aria-pressed="false">No</button></div>'+
+      '<div class="fit-reply" id="fitreply" aria-live="polite"></div><div class="ask" id="fitoff" hidden><p class="q">Which part felt off?</p></div></div>'+
+    alt+
+    '<details class="how"><summary>See how we counted your chart</summary>'+
+      '<div class="pillars">'+[["Hour","时",fp.hour],["Day","日",fp.day],["Month","月 ×2",fp.month],["Year","年",fp.year]].map(([en,zh,pl],i)=>
+        '<div class="pl'+(i===1?' dm':'')+'"><div class="lab">'+en+' '+zh+'</div><div class="god">'+(pl?(i===1?'Day Master':TG[tenGod(dm,si(pl[0]))][0]):'—')+'</div><div class="ch">'+(pl?pl[0]:'?')+'</div><div class="ch">'+(pl?pl[1]:'?')+'</div><div class="hid">'+(pl?[...HIDDEN[pl[1]]].map(h=>h+'<small>'+TG[tenGod(dm,si(h))][0]+'</small>').join(''):'<small>no time</small>')+'</div></div>').join('')+'</div>'+
+      '<div class="gbars">'+GROUPS_EN.map((n,i)=>'<div class="gb'+(i===r.top?' top':'')+'"><span><span class="zh">'+GROUPS_ZH[i]+'</span>'+n+'</span><div class="bar"><i style="background:var(--g'+i+')" data-w="'+(g[i]/total*100)+'"></i></div><b>'+g[i].toFixed(1)+'</b></div>').join('')+'</div>'+
+      '<p class="small">Stems count 1 point each (not your own Day Master). Branches are split into their hidden stems (0.6 / 0.3 / 0.1). The month branch counts double. The Ten Gods are added into five groups, and the biggest group names your pattern. '+(r.mode==="exact"?'':'Without an exact time, we count the hour for each possible birth hour and take the most common result. ')+'<a href="about.html#how">Full method</a>.</p>'+
+    '</details>';
+  out.appendChild(card);
+  sendEvent("result",{type:t.n,mode:r.mode});
+  $("#movebox").appendChild(movePicker(t,"result"));
+  $("#scenechips").appendChild(chips(SCENES.map(x=>[x[0],x[1]]),v=>{
+    const sc=SCENES.find(x=>x[0]===v); $("#sceneout").innerHTML='<b>'+esc(sc[2])+'</b>'+esc(cap(t.stuck[v]));
+    sendEvent("scene",{type:t.n,scene:v});
+  }));
+  const offBox=$("#fitoff"), offReply=document.createElement("div"); offReply.className="fit-reply";
+  offBox.appendChild(chips([["line","The painful line"],["strength","The strength"],["move","The moves"]],v=>{
+    offReply.textContent="Thank you — that tells us which line to rewrite first.";
+    sendEvent("fit_off",{type:t.n,part:v,mode:r.mode});
+  })); offBox.appendChild(offReply);
+  await wait(200); $("#seal").classList.add("on"); card.classList.add("shake");
+  card.querySelector("details.how").addEventListener("toggle",ev=>{ if(ev.target.open) ev.target.querySelectorAll(".bar i").forEach((b,i)=>setTimeout(()=>b.style.width=b.dataset.w+"%",RM?0:80+i*90)); });
+  const replies={yes:"Thanks. Then this month's move is worth one try — once is enough to count.",
+    partly:"Thanks. Patterns often show up in one part of life more than others."+(r.near||(r.mode!=="exact"&&r.stable<r.tried)?" The second pattern above may fill in the rest.":" Your birth time can make it clearer."),
+    no:"Thanks for saying so — that's useful to know. This is one way of counting a chart, and we show exactly how it works on the About page."};
+  card.querySelectorAll(".fit button").forEach(b=>b.addEventListener("click",()=>{
+    card.querySelectorAll(".fit button").forEach(x=>x.setAttribute("aria-pressed",String(x===b)));
+    $("#fitreply").textContent=replies[b.dataset.a]; sendEvent("fit",{type:t.n,answer:b.dataset.a,mode:r.mode});
+    offBox.hidden=b.dataset.a==="yes";
+  }));
+
+  /* 注意（境目・夜11時台・1982年より前） */
+  const notes=[];
+  if(r.dayAlt){ const ta=T(r.dayAlt.dm*5+r.dayAlt.top); notes.push("Born at 11 pm: some BaZi schools start the next day at 11 pm. Counted that way, your Day Master is "+STEMS[r.dayAlt.dm]+" and your pattern would be <b>"+esc(fullName(ta))+"</b>."); }
+  if(r.midnight&&off===8) notes.push("Born just after midnight: Singapore clocks run about an hour ahead of the sun, so some schools count this as the previous day.");
+  if(r.jieAlt) notes.push("You were born near the start of a solar month, so your month pillar may be the one next to it."+(r.jieAlt.changes?" Counted that way, your pattern would be <b>"+esc(fullName(T(dm*5+r.jieAlt.top)))+"</b>.":" Your pattern stays the same either way.")+(r.mode==="exact"?"":" Adding your birth time helps."));
+  if(off!==8) notes.push("Births before 1982 are calculated with the Singapore clock of that time (UTC+"+({7:"7",7.5:"7:30",9:"9"}[off]||"7:20")+").");
+  if(notes.length){const n=document.createElement("div"); n.className="note"; n.innerHTML=notes.join("<br>"); out.appendChild(n);}
+
+  /* 重い人への一言（番号は SOS 公式の案内 PDF で確かめた：2026-11-10） */
+  const hv=document.createElement("p"); hv.className="heavy";
+  hv.innerHTML='<b>If this feels heavier than a habit, talk to someone.</b> A chart can help you notice a pattern; it can\'t listen the way a person can. In Singapore, Samaritans of Singapore (SOS) is there 24 hours: call <a href="tel:1767">1767</a> or WhatsApp <a href="https://wa.me/6591511767" target="_blank" rel="noopener">9151 1767</a>.';
+  out.appendChild(hv);
+
+  /* ⑥ 共有 */
+  const sh=document.createElement("section"); sh.className="sheet reveal";
+  sh.innerHTML='<div class="tag">Share</div><h2>Your pattern card</h2><p class="sub">Send it to the friend who\'d say "this is so you" — and ask for theirs.</p><div class="share" id="sharebox"></div>';
+  out.appendChild(sh);
+
+  /* ⑦ 相性 */
+  const pr=document.createElement("section"); pr.className="sheet reveal";
+  pr.innerHTML='<div class="tag">Two charts · 合盘</div><div class="pair"><div><h2>How your patterns meet</h2><p class="sub" style="margin:0">Put your chart next to a partner\'s, a parent\'s or a friend\'s, and see where your two patterns rub.</p></div><span class="soon">Coming soon</span></div>'+
+    '<div class="btns" style="margin-top:12px"><button class="btn2" type="button" disabled>Compare with someone · soon</button></div>';
+  out.appendChild(pr);
+
+  /* ⑧ 手帳 */
+  const rows=techo(r), m0=rows[0];
+  const ev=EVENT_ORDER.find(k=>m0.events.includes(k));
+  const lblCls=m0.rel==="brake"?" p":(m0.rel==="outlet"||m0.rel==="push"?" o":"");
+  const st=new Date(m0.start), stTxt=st.getUTCDate()+" "+MON[st.getUTCMonth()]+", "+((st.getUTCHours()%12)||12)+":"+String(st.getUTCMinutes()).padStart(2,"0")+(st.getUTCHours()<12?" am":" pm");
+  const of=document.createElement("section"); of.className="offer reveal";
+  of.innerHTML='<div class="tag" style="color:var(--kin)">Your 2027 notebook · 2027 手账</div><h3>Thirteen months with '+esc(t.name)+'</h3>'+
+    '<p class="lead2">Built from your own chart: which months your pattern tends to show up (★), which months your move is easiest (◎), one "if… then…" to try each month, and a question to look back with. Starts with January 2027, so you can use it straight away.</p>'+
+    '<div class="glance" aria-label="Your 2027 at a glance">'+rows.map((x,i)=>{const dt=new Date(x.start); return '<div class="'+(x.watch?'w':(x.rel==="brake"?'p':''))+'">'+(i===0?'Jan':(i===12?'Jan ’28':MON[dt.getUTCMonth()]))+'<b>'+(x.watch?'★':(x.rel==="brake"?'◎':'·'))+'</b></div>';}).join('')+'</div>'+
+    '<p class="legend">★ your pattern tends to show up more · ◎ the easiest month for your move. Each month starts at its solar term, not on the 1st.</p>'+
+    '<div class="page"><span class="sample">SAMPLE</span>'+
+      '<div class="ph"><b>January 2027 · 辛丑 <span class="zh" style="font-size:.85rem;font-family:var(--zh)">'+TG[m0.god][0]+'</span></b><span>Starts '+stTxt+' (Singapore) '+(m0.watch?'★':(m0.rel==="brake"?'◎':''))+'</span></div>'+
+      '<div class="lbl'+lblCls+'">'+REL_LABEL[m0.rel]+'</div>'+
+      '<h4>This month for '+esc(t.name)+'</h4><p>'+esc(MONTH_TEXT[r.top][m0.rel])+(ev?' '+esc(EVENT_TEXT[ev]):'')+'</p>'+
+      '<h4>Try this</h4><p class="if">'+esc(t.moves[1])+'</p><p class="opts">Other option: '+esc(t.moves[2])+'</p>'+
+      '<h4>At the end of the month, ask yourself</h4><p>'+esc(MONTH_Q[r.top])+'</p>'+
+      '<div class="tick"><span>I did it</span><span>Partly</span><span>Not this month — useful to know too</span></div><div class="lineout"></div>'+
+    '</div>'+
+    '<button type="button" class="buy" id="notify"><span>Tell me when it\'s ready</span><span class="price">'+NOTEBOOK_PRICE+'</span></button><p class="buy-note" id="notifynote" aria-live="polite"></p>'+
+    '<div class="honest">Made for your chart by a fixed set of rules (no AI writing on the spot), checked by us. Ideas to try and questions to ask — not instructions, not predictions.</div>';
+  out.appendChild(of);
+  /* 手帳はまだ売らない：押された数だけ数える（外へは飛ばさない） */
+  $("#notify").addEventListener("click",()=>{ sendEvent("notebook",{type:t.n,once:1});
+    $("#notifynote").textContent="Thank you — noted. The notebook isn't ready yet. We don't take your contact details, so it will appear right here when it is."; });
+
+  /* ⑨ メール */
+  const ml=document.createElement("section"); ml.className="sheet reveal";
+  ml.innerHTML='<div class="tag">One question a month</div><h2>Did you try it?</h2><p class="sub" style="margin:0">On the first day of each solar month, one short email: your move for the month, and one question — Yes, Partly or Not yet. No forecasts.</p>'+
+    '<!-- 配信の道具（1人ずつ型を差し込めるもの）は未定。決まったら action と送る中身をここに入れる。今は外へ何も送らない -->'+
+    '<form class="mail" id="mailf" action="" novalidate><input type="email" id="mail" placeholder="you@example.com" aria-label="Email address" autocomplete="email"><button type="submit">Sign up</button></form>'+
+    '<p class="mail-note" id="mailnote">Coming soon — sign-up isn\'t open yet, so nothing is sent or saved.</p>';
+  out.appendChild(ml);
+  $("#mailf").addEventListener("submit",ev=>{ ev.preventDefault(); $("#mailnote").textContent="Not open yet — your address was not sent or saved. Please check back soon."; });
+
+  /* 共有カード（フォントを読んでから描く） */
+  try{ await Promise.all(["600 92px 'Cormorant Garamond'","italic 500 46px 'Cormorant Garamond'","500 46px 'Noto Serif SC'","800 190px 'Shippori Mincho'","500 34px 'IBM Plex Mono'"].map((f,i)=>document.fonts.load(f,i===2?t.zhName+"我的八字类型":(i===3?STEMS_ZH[dm]:"A")))); }catch(_){}
+  const cv=shareCard(t,dm); $("#sharebox").appendChild(cv);
+  const bx=document.createElement("div"); bx.className="btns";
+  const shareText="My BaZi Type: "+fullName(t)+". What's yours? "+SHARE_URL;
+  const b=document.createElement("button"); b.className="btn2"; b.type="button"; b.textContent="Save image"; b.onclick=()=>{const a=document.createElement("a"); a.download="my-bazi-type.png"; a.href=cv.toDataURL("image/png"); a.click(); sendEvent("share",{type:t.n,how:"save"});}; bx.appendChild(b);
+  const wa=document.createElement("a"); wa.className="btn2"; wa.style.textDecoration="none"; wa.href="https://wa.me/?text="+encodeURIComponent(shareText); wa.target="_blank"; wa.rel="noopener"; wa.textContent="WhatsApp";
+  wa.addEventListener("click",()=>sendEvent("share",{type:t.n,how:"whatsapp"})); bx.appendChild(wa);
+  if(navigator.canShare){ const s=document.createElement("button"); s.className="btn2"; s.type="button"; s.textContent="Send to a friend";
+    s.onclick=()=>cv.toBlob(async bl=>{ const file=new File([bl],"my-bazi-type.png",{type:"image/png"}); const data={files:[file],text:shareText};
+      sendEvent("share",{type:t.n,how:"native"});
+      try{ if(navigator.canShare(data)) await navigator.share(data); else await navigator.share({text:shareText}); }catch(_){} }); bx.insertBefore(s,wa); }
+  $("#sharebox").appendChild(bx);
+
+  /* 画面に入ったら出す */
+  const io=new IntersectionObserver(es=>es.forEach(en=>{ if(!en.isIntersecting) return; io.unobserve(en.target); en.target.classList.add("on"); }),{threshold:.15});
+  out.querySelectorAll(".reveal").forEach(x=>io.observe(x));
+  card.scrollIntoView({behavior:RM?"auto":"smooth",block:"start"});
+});
+</script>
+</body>
+</html>
