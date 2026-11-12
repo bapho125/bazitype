@@ -324,13 +324,13 @@ const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",
 /* 手帳の見本の文（正：research_notes/占いシンガポール/中身_癖の型/手帳の組み立て.md の 5・5b。たたき台）*/
 const REL_NOTE={same:"your pattern gets extra fuel from the month itself",fuel:"things around you quietly feed your pattern",outlet:"a good month to turn your strength into something else",brake:"the month itself helps you hold back; your move is easiest now",push:"your pattern tends to land on people or money"};
 const MONTH_TEXT=[
- {same:"This month adds more of your own drive — more \"I'll handle it\", more keeping up with friends. Good for standing firm; it's also when you're most likely to carry it all alone.",
+ {same:"This month adds more of your own drive — more \"I'll handle it\", more measuring yourself against friends. Good for standing firm; it's also when you're most likely to carry it all alone.",
   fuel:"Support, study and family advice are around you this month — and they quietly strengthen your \"I can do it myself\". Notice when help is offered and you wave it away.",
   outlet:"Your energy wants to come out as words or something you make this month. A good month to say what you need out loud rather than just pushing through.",
   brake:"Rules, deadlines and other people's expectations press on you this month. That makes it the easiest month to let someone else hold one piece.",
   push:"Your pattern tends to land on money this month — treating, lending, splitting with friends. Before you pay for someone, check one number first."},
  {same:"This month adds more of your own energy — more ideas, more to say. Lovely for creating; it's also when the sharp comment or the extra project slips out most easily.",
-  fuel:"People like you this month — peers, friends, rivals — keep sparking you. Notice when \"one more idea\" is really you keeping up with someone else.",
+  fuel:"People like you — peers, friends, rivals — keep sparking you this month. Notice when \"one more idea\" is really you keeping up with someone else.",
   outlet:"Your ideas can turn into something real this month: a finished piece, a paid task, a plan with a date. A good month to finish rather than start.",
   brake:"Learning, rest and quiet time slow your flow a little this month. That makes it the easiest month to hold back one comment or one new start.",
   push:"Your pattern tends to push against rules and bosses this month. If something feels unfair, write it down first and raise it the next day."},
@@ -338,7 +338,7 @@ const MONTH_TEXT=[
   fuel:"New ideas and side projects spark easily this month, and each one feeds your urge to build. Notice when \"one more thing\" is crowding out a free evening.",
   outlet:"Your effort can turn into recognition or a clearer role this month. A good month to ask for credit for what you've already done, rather than add more.",
   brake:"Friends and peers pull you away from work this month. That makes it the easiest month to say yes to an evening with nothing to show for it.",
-  push:"Your pattern tends to push past rest and quiet this month — study, sleep and family time get squeezed. If you cancel something restful, put it back on another day that week."},
+  push:"Your pattern tends to push past rest and quiet this month — study, sleep and family time get squeezed. If you cancel something restful, put it back in the same week."},
  {same:"This month adds more duty and more expectations — from work, family, people who rely on you. Good for showing you're dependable; it's also when one more \"yes\" slips out most easily.",
   fuel:"Money, targets and results are loud this month, and they feed your sense that you must keep holding everything. Notice when \"I have to\" is really \"I'm used to\".",
   outlet:"Pressure can turn into learning this month — a course, a mentor, a quiet weekend. A good month to put one hour into yourself on purpose.",
@@ -351,10 +351,10 @@ const MONTH_TEXT=[
   push:"Your pattern tends to hold back your own words and plans this month. If you notice you've drafted the same idea twice, share the second draft."}
 ];
 const MONTH_Q=["When did you let someone help this month — and what did it actually cost you?","Which idea or comment did you hold for a day this month, and what changed because you waited?","What did you do this month that had no result at all — and how did it feel?","Which yes this month was really yours, and which one did you say for someone else?","What did you start this month before you felt ready?"];
-const EVENT_TEXT={dayClash:"This month can stir things with the person closest to you. If a decision about \"us\" comes up, set a date to talk instead of agreeing on the spot.",
+const EVENT_TEXT={dayClash:"This month can stir things up with the person closest to you. If a decision about \"us\" comes up, set a date to talk instead of agreeing on the spot.",
   dayCombine:"This month pulls you towards the people you love — lovely, and also the easiest month to say yes to everything they ask.",
   monthClash:"Work or home routines may shift this month. Decide one thing you'll keep the same.",
-  yearClash:"Family topics (parents, housing, plans) may come up. Your pattern is strongest here, so note what you want before the conversation."};
+  yearClash:"Family topics (parents, housing, plans) may come up. Your pattern tends to show up most in these conversations, so note what you want before they start."};
 const EVENT_ORDER=["dayClash","dayCombine","monthClash","yearClash"];
 const MON=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
 
@@ -366,7 +366,7 @@ const SCENES=[["Work","Work","At work"],["Money","Money","With money"],["Love","
 const cap=s=>s.charAt(0).toUpperCase()+s.slice(1);
 const pad=n=>String(n).padStart(2,"0");
 const utcStamp=d=>d.getUTCFullYear()+pad(d.getUTCMonth()+1)+pad(d.getUTCDate())+"T"+pad(d.getUTCHours())+pad(d.getUTCMinutes())+"00Z";
-const checkUrl=(n,i)=>SITE+"?check="+n+"&move="+(i+1);
+const checkUrl=(n,i)=>SITE+"?check="+n+"&move="+(i+1)+"&from=remind"; /* 2026-11-13 7日後に戻った人を道で分ける */
 const DOW=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
 /* 7日後のシンガポール夜8時（UTC 12時）から15分 */
 function remindTimes(){ const sg=new Date(Date.now()+8*36e5+7*864e5);
@@ -553,7 +553,7 @@ $("#f").addEventListener("submit",async e=>{
     alt+
     '<details class="how"><summary>See how we counted your chart</summary>'+
       '<div class="pillars">'+[["Hour","时",fp.hour],["Day","日",fp.day],["Month","月 ×2",fp.month],["Year","年",fp.year]].map(([en,zh,pl],i)=>
-        '<div class="pl'+(i===1?' dm':'')+'"><div class="lab">'+en+' '+zh+'</div><div class="god">'+(pl?(i===1?'Day Master':TG[tenGod(dm,si(pl[0]))][0]):'—')+'</div><div class="ch">'+(pl?pl[0]:'?')+'</div><div class="ch">'+(pl?pl[1]:'?')+'</div><div class="hid">'+(pl?[...HIDDEN[pl[1]]].map(h=>h+'<small>'+TG[tenGod(dm,si(h))][0]+'</small>').join(''):'<small>no time</small>')+'</div></div>').join('')+'</div>'+
+        '<div class="pl'+(i===1?' dm':'')+'"><div class="lab">'+en+' '+zh+'</div><div class="god"'+(pl&&i!==1?' title="'+tgTitle(tenGod(dm,si(pl[0])))+'"':'')+'>'+(pl?(i===1?'Day Master':TG[tenGod(dm,si(pl[0]))][0]):'—')+'</div><div class="ch">'+(pl?pl[0]:'?')+'</div><div class="ch">'+(pl?pl[1]:'?')+'</div><div class="hid">'+(pl?[...HIDDEN[pl[1]]].map(h=>h+'<small title="'+tgTitle(tenGod(dm,si(h)))+'">'+TG[tenGod(dm,si(h))][0]+'</small>').join(''):'<small>no time</small>')+'</div></div>').join('')+'</div>'+
       '<div class="gbars">'+GROUPS_EN.map((n,i)=>'<div class="gb'+(i===r.top?' top':'')+'"><span><span class="zh">'+GROUPS_ZH[i]+'</span>'+n+'</span><div class="bar"><i style="background:var(--g'+i+')" data-w="'+(g[i]/total*100)+'"></i></div><b>'+g[i].toFixed(1)+'</b></div>').join('')+'</div>'+
       '<p class="small">Stems count 1 point each (not your own Day Master). Branches are split into their hidden stems (0.6 / 0.3 / 0.1). The month branch counts double. The Ten Gods are added into five groups, and the biggest group names your pattern. '+(r.mode==="exact"?'':'Without an exact time, we count the hour for each possible birth hour and take the most common result. ')+'<a href="about.html#how">Full method</a>.</p>'+
     '</details>';
@@ -615,7 +615,7 @@ $("#f").addEventListener("submit",async e=>{
     '<div class="glance" aria-label="Your 2027 at a glance">'+rows.map((x,i)=>{const dt=new Date(x.start); return '<div class="'+(x.watch?'w':(x.rel==="brake"?'p':''))+'">'+(i===0?'Jan':(i===12?'Jan ’28':MON[dt.getUTCMonth()]))+'<b>'+(x.watch?'★':(x.rel==="brake"?'◎':'·'))+'</b></div>';}).join('')+'</div>'+
     '<p class="legend">★ your pattern tends to show up more · ◎ the easiest month for your move. Each month starts at its solar term, not on the 1st.</p>'+
     '<div class="page"><span class="sample">SAMPLE</span>'+
-      '<div class="ph"><b>January 2027 · 辛丑 <span class="zh" style="font-size:.85rem;font-family:var(--zh)">'+TG[m0.god][0]+'</span></b><span>Starts '+stTxt+' (Singapore) '+(m0.watch?'★':(m0.rel==="brake"?'◎':''))+'</span></div>'+
+      '<div class="ph"><b>January 2027 · 辛丑 <span class="zh" style="font-size:.85rem;font-family:var(--zh)" title="'+tgTitle(m0.god)+'">'+TG[m0.god][0]+'</span></b><span>Starts '+stTxt+' (Singapore) '+(m0.watch?'★':(m0.rel==="brake"?'◎':''))+'</span></div>'+
       '<div class="lbl'+lblCls+'">'+REL_LABEL[m0.rel]+'</div>'+
       '<h4>This month for '+esc(t.name)+'</h4><p>'+esc(MONTH_TEXT[r.top][m0.rel])+(ev?' '+esc(EVENT_TEXT[ev]):'')+'</p>'+
       '<h4>Try this</h4><p class="if">'+esc(t.moves[1])+'</p><p class="opts">Other option: '+esc(t.moves[2])+'</p>'+

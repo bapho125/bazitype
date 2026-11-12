@@ -35,12 +35,14 @@ function risshunUTCms(y){ // 立春（黄経315度）
 // 蔵干（本気・中気・余気の順）と重み
 const HIDDEN={"子":"癸","丑":"己癸辛","寅":"甲丙戊","卯":"乙","辰":"戊乙癸","巳":"丙庚戊","午":"丁己","未":"己丁乙","申":"庚壬戊","酉":"辛","戌":"戊辛丁","亥":"壬甲"};
 const HID_W=[[1],[0.7,0.3],[0.6,0.3,0.1]];
-const TG=[["比肩","Friend"],["劫财","Rob Wealth"],["食神","Eating God"],["伤官","Hurting Officer"],["偏财","Indirect Wealth"],["正财","Direct Wealth"],["七杀","Seven Killings"],["正官","Direct Officer"],["偏印","Indirect Resource"],["正印","Direct Resource"]];
+// 十神 [漢字, 客に見せる英語（やさしい名前）, 昔の英訳]。Etsy の手帳（../占い_Etsy/calc_world.py の TG_EN・TG_TRAD）と同じ（2026-11-10）
+const TG=[["比肩","Companion","Friend"],["劫财","Rival","Rob Wealth"],["食神","Expression","Eating God"],["伤官","Bold Voice","Hurting Officer"],["偏财","Windfall","Indirect Wealth"],["正财","Steady Income","Direct Wealth"],["七杀","Pressure","Seven Killings"],["正官","Duty","Direct Officer"],["偏印","Unusual Learning","Indirect Resource"],["正印","Support","Direct Resource"]];
 function tenGod(dm,o){ // 日主から見た十神の番号
   const r=((Math.floor(o/2)-Math.floor(dm/2))%5+5)%5, same=(o%2)===(dm%2);
   return r*2+(same?0:1);
 }
 const si=c=>STEMS_ZH.indexOf(c);
+const tgTitle=i=>TG[i][1]+" (traditional name: "+TG[i][2]+")"; // 画面では漢字の上に指を置くと出る
 
 // 5つの群（比劫・食傷・財・官殺・印）
 const GROUPS_ZH=["比劫","食伤","财","官杀","印"];
@@ -142,7 +144,7 @@ const M2027=["壬寅","癸卯","甲辰","乙巳","丙午","丁未","戊申","己
 const M0_2027="辛丑"; // 2027年1月（小寒から）
 const REL=["same","outlet","push","brake","fuel"]; // (月の群 − 癖の群) mod 5
 const REL_PT={same:2,fuel:1,outlet:0,brake:0,push:0};
-const REL_LABEL={same:"Peak month",fuel:"Feeding month",outlet:"Outlet month",brake:"Practice month",push:"Spill-over month"};
+const REL_LABEL={same:"Peak month",fuel:"Fuel month",outlet:"Outlet month",brake:"Practice month",push:"Spill-over month"};
 function jieDate(target,loMs){ // 太陽黄経が target を通る時刻（kuse.py と同じ二分法）→ シンガポール時刻を UTC の数で
   let lo=loMs, hi=loMs+30*86400000;
   for(let i=0;i<60;i++){const mid=lo+(hi-lo)/2; const dl=((sunLon(jdOf(mid))-target+540)%360)-180; if(dl>=0) hi=mid; else lo=mid;}
@@ -179,4 +181,4 @@ function techo(r){
   return [m0,...rows];
 }
 
-if(typeof module!=="undefined") module.exports={fourPillars,kuse,pick,score,techo,jieDates2027,GROUPS_ZH,GROUPS_EN,STEMS,STEMS_ZH,TG};
+if(typeof module!=="undefined") module.exports={fourPillars,kuse,pick,score,techo,jieDates2027,GROUPS_ZH,GROUPS_EN,STEMS,STEMS_ZH,TG,tgTitle};
